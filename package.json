@@ -1,0 +1,28 @@
+{
+  "name": "learn-socketio",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "my first socket.io app",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js",
+    "copyHTML": "cp index.html dist/index.html"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.15.0",
+    "argon2": "^0.44.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.3.1",
+    "prisma": "^6.15.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
