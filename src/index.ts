@@ -21,7 +21,6 @@ import {
 } from "./room.js";
 import { getMessages, insertMessage, type MessageInput } from "./message.js";
 import { emitWithRetry } from "./socket.js";
-import { error } from "console";
 
 const app = express();
 const server = createServer(app);
@@ -36,10 +35,6 @@ type EventResponse = {
 };
 
 app.use(express.json());
-
-app.get("/", (_: Request, res: Response) => {
-  res.sendFile(process.cwd() + "/index.html");
-});
 
 app.post("/user/new", async (req: Request, res: Response) => {
   try {

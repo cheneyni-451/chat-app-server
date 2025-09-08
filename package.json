@@ -7,8 +7,7 @@
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "serve": "node dist/index.js",
-    "copyHTML": "cp index.html dist/index.html"
+    "serve": "node dist/index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",
