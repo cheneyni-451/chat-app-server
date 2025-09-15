@@ -21,11 +21,16 @@ import {
 } from "./room.js";
 import { getMessages, insertMessage, type MessageInput } from "./message.js";
 import { emitWithRetry } from "./socket.js";
+import cors from "cors";
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
+  cors: {
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST"],
+  },
 });
 const prisma = new PrismaClient();
 const port = process.env.PORT || 3000;
@@ -34,7 +39,14 @@ type EventResponse = {
   status: string;
 };
 
-app.use(express.json());
+app.use(
+  express.json(),
+  cors({
+    maxAge: 84600,
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST"],
+  })
+);
 
 app.post("/user/new", async (req: Request, res: Response) => {
   try {
