@@ -23,12 +23,14 @@ import { getMessages, insertMessage, type MessageInput } from "./message.js";
 import { emitWithRetry } from "./socket.js";
 import cors from "cors";
 
+const CLIENT_ORIGIN = "http://localhost:5173";
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
   cors: {
-    origin: "http://localhost:4200",
+    origin: CLIENT_ORIGIN,
     methods: ["GET", "POST"],
   },
 });
@@ -43,7 +45,7 @@ app.use(
   express.json(),
   cors({
     maxAge: 84600,
-    origin: "http://localhost:4200",
+    origin: CLIENT_ORIGIN,
     methods: ["GET", "POST"],
   })
 );
