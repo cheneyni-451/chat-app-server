@@ -1,8 +1,8 @@
 import type { Server } from "socket.io";
 import type { MessageDetail } from "./message.js";
 
-const RETRY_INTERVAL = 1000;
-const MAX_RETRIES = 3;
+const RETRY_INTERVAL = 100;
+const MAX_RETRIES = 6;
 
 export async function emitWithRetry(
   io: Server,
