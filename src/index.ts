@@ -29,6 +29,7 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
+  path: process.env.SOCKET_IO_PATH ?? "/socket.io",
   connectionStateRecovery: {},
   cors: {
     origin: CLIENT_ORIGIN,
