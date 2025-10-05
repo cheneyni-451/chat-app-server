@@ -3,7 +3,7 @@ import jwt, { type JwtPayload, type Secret } from "jsonwebtoken";
 
 const SECRET_KEY: Secret = "secret-key";
 
-export interface CustomRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   token: string | JwtPayload;
 }
 
@@ -22,7 +22,7 @@ export function auth(req: Request, res: Response, next: NextFunction) {
     }
 
     const decoded = jwt.verify(token, SECRET_KEY);
-    (req as CustomRequest).token = decoded;
+    (req as AuthenticatedRequest).token = decoded;
 
     next();
   } catch (e) {

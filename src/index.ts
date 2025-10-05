@@ -10,7 +10,8 @@ import {
   type LoginUserInput,
   type UserDetails,
 } from "./user.js";
-import { auth } from "./auth.js";
+import { auth } from "./middleware/auth.js";
+import { rewriteServicePath } from "./middleware/pathRewrite.js";
 import {
   insertRoomMember,
   getRoomById,
@@ -23,7 +24,7 @@ import { getMessages, insertMessage, type MessageInput } from "./message.js";
 import { emitWithRetry } from "./socket.js";
 import cors from "cors";
 
-const CLIENT_ORIGIN = "http://localhost:5173";
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 const app = express();
 const server = createServer(app);
@@ -47,7 +48,8 @@ app.use(
     maxAge: 84600,
     origin: CLIENT_ORIGIN,
     methods: ["GET", "POST"],
-  })
+  }),
+  rewriteServicePath
 );
 
 app.post("/user/new", async (req: Request, res: Response) => {

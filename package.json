@@ -4,12 +4,17 @@
   "type": "module",
   "description": "chat app server",
   "scripts": {
-    "start": "tsx src/index.ts",
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "serve": "node dist/index.js"
+    "start": "./node_modules/.bin/dotenvx run -f .env.development -- tsx src/index.ts",
+    "dev": "./node_modules/.bin/dotenvx run -f .env.development -- tsx watch src/index.ts",
+    "build:dev": "./node_modules/.bin/dotenvx run -f .env.development -- tsc",
+    "build:prod": "./node_modules/.bin/dotenvx run -f .env.production -- tsc",
+    "serve:dev": "./node_modules/.bin/dotenvx run -f .env.development -- node dist/index.js",
+    "serve:prod": "./node_modules/.bin/dotenvx run -f .env.production -- node dist/index.js",
+    "migrate:prod": "./node_modules/.bin/dotenvx run -f .env.production -- npx prisma migrate deploy",
+    "migrate:dev": "./node_modules/.bin/dotenvx run -f .env.development -- npx prisma migrate deploy"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.51.0",
     "@prisma/client": "^6.15.0",
     "argon2": "^0.44.0",
     "cors": "^2.8.5",
