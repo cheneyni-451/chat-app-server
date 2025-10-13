@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   id         Int          @id @default(autoincrement())
-  email      String       @unique
+  email      String       @unique @db.VarChar(254)
   name       String
   password   Bytes
   createdAt  DateTime     @default(now())
