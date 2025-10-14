@@ -28,9 +28,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @NotBlank(message = "username is required")
-    @Size(max = 50, message = "username cannot be greater than 50 characters")
-    private String username;
+    @NotBlank(message = "name is required")
+    @Size(max = 50, message = "name cannot be greater than 50 characters")
+    private String name;
 
     @NotBlank(message = "password is required")
     @Size(min = 8, message = "password must have at least 8 characters")
@@ -38,12 +38,13 @@ public class User {
 
     private LocalDateTime createdAt;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(int userId, String email, String username, String password) {
+    public User(int userId, String email, String name, String password) {
         this.userId = userId;
         this.email = email;
-        this.username = username;
+        this.name = name;
         this.password = password;
     }
 
@@ -63,12 +64,12 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -94,13 +95,13 @@ public class User {
         }
         User user = (User) o;
         return userId == user.userId && Objects.equals(email, user.email)
-            && Objects.equals(username, user.username) && Objects.equals(
+            && Objects.equals(name, user.name) && Objects.equals(
             password, user.password) && Objects.equals(createdAt, user.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, username, password, createdAt);
+        return Objects.hash(userId, email, name, password, createdAt);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class User {
         return "User{" +
             "userId=" + userId +
             ", email='" + email + '\'' +
-            ", username='" + username + '\'' +
+            ", username='" + name + '\'' +
             ", createdAt=" + createdAt +
             '}';
     }

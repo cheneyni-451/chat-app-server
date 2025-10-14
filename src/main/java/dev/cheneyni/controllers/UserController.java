@@ -1,30 +1,19 @@
 package dev.cheneyni.controllers;
 
+import dev.cheneyni.domain.Result;
 import dev.cheneyni.domain.UserService;
 import dev.cheneyni.models.User;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-class GetUserByEmailInput {
-    private String email;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-}
-
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService service;
@@ -33,15 +22,15 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<User> getUserByEmail(@RequestBody GetUserByEmailInput emailInput) {
-        if (emailInput == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping("/new")
+    public ResponseEntity<Object> createUser(@RequestBody @Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        User user = service.findByEmail(emailInput.getEmail());
-        if (user != null) {
-            return ResponseEntity.ok(user);
+        Result<User> createUserResult = service.createUser(user);
+        if (createUserResult.isSuccess()) {
+            return new ResponseEntity<>(createUserResult.getData(), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
